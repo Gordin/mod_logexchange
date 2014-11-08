@@ -28,7 +28,6 @@ function string.ends(String,End)
 end
 
 
-local find = require "rex_posix".find
 local lom = require "lxp.lom"
 local xpath = require "xpath"
 
@@ -499,12 +498,12 @@ local function jid_test(pattern, stanza, from, to)
     end
     -- module:log("info", "JID pattern:"..where..":"..jid.. ", stanza comes from "..from)
     if where == "from" then
-        return find(from, jid)
+        return string.find(jid, from)
     elseif where == "to" then
-        return find(to, jid)
+        return string.find(jid, to)
     elseif where == "both" then
         info("stanza.attr.to: "..tostring(stanza))
-        return find(to, jid) or find(from, jid)
+        return string.find(jid, to) or string.find(jid, from)
     end
 end
 
