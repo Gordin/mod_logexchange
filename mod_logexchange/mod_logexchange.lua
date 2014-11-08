@@ -28,9 +28,6 @@ function string.ends(String,End)
 end
 
 
-local lom = require "lxp.lom"
-local xpath = require "xpath"
-
 local eventlog_new = module:require "eventlog".new;
 local log_new = module:require "eventlog".new_log;
 local eventlog_from_logs = module:require "eventlog".new_from_logs;
