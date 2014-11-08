@@ -89,7 +89,8 @@ if stats.time then
                               get = stats.time.tostring}
 end
 
-local PrettyPrint = require "PrettyPrint"
+-- local PrettyPrint = require "PrettyPrint"
+local PrettyPrint = function(x) return tostring(x) or "nil" end
 local pp = function (x) if type(x) == "table" then return PrettyPrint(x) else return tostring(x) end end
 local info = function(x)
     module:log("info", pp(x))
