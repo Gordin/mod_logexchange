@@ -47,36 +47,47 @@ local p2p_sessions = {};
 local smartInOut = {};
 
 
-local status_providers = {
+local status_providers = {};
+
+local possible_stats = {
     total_component     = { label = "Connected components",
-                            get = stats.total_component.get},
+                            get = stats.total_component},
     total_users         = { label = "Online users",
-                            get = stats.total_users.get},
+                            get = stats.total_users},
     memory_used         = { label = "Memory used by Prosody (Bytes)",
-                            get = stats.memory_used.get},
+                            get = stats.memory_used},
     total_s2sin         = { label = "Incoming s2s connections",
-                            get = stats.total_s2sin.get},
+                            get = stats.total_s2sin},
     total_s2sout        = { label = "Outgoing s2s connections",
-                            get = stats.total_s2sout.get},
+                            get = stats.total_s2sout},
     memory_returnable   = { label = "Not Garbage collected memory",
-                            get = stats.memory_returnable.get},
+                            get = stats.memory_returnable},
     memory_unused       = { label = "Unused memory",
-                            get = stats.memory_unused.get},
+                            get = stats.memory_unused},
     memory_lua          = { label = "Memory used by lua",
-                            get = stats.memory_lua.get},
+                            get = stats.memory_lua},
     up_since            = { label = "Uptime as timestamp",
-                            get = stats.up_since.get},
-    time                = { label = "Current Server time",
-                            get = stats.time.tostring},
+                            get = stats.up_since},
     cpu                 = { label = "CPU usage of Prosody (%)",
-                            get = stats.cpu.get},
+                            get = stats.cpu},
     memory_allocated    = { label = "Memory allocated for Prosody (Bytes)",
-                            get = stats.memory_allocated.get},
+                            get = stats.memory_allocated},
     total_c2s           = { label = "Total c2s connections",
-                            get = stats.total_c2s.get},
+                            get = stats.total_c2s},
     total_s2s           = { label = "Total s2s connections",
-                            get = stats.total_s2s.get},
-};
+                            get = stats.total_s2s},
+}
+
+for k,v in pairs(possible_stats) do
+    if v.get ~= nil then
+        v.get = v.get.get
+        status_providers[k] = v
+    end
+end
+if stats.time then
+    status_providers.time = { label = "Current Server time",
+                              get = stats.time.tostring}
+end
 
 local PrettyPrint = require "PrettyPrint"
 local pp = function (x) if type(x) == "table" then return PrettyPrint(x) else return tostring(x) end end
